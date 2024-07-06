@@ -11,11 +11,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil3.compose.AsyncImage
+import heathstonecard.composeapp.generated.resources.*
+import org.jetbrains.compose.resources.Font
 import org.oxyroid.hscard.database
 import org.oxyroid.hscard.database.model.MinionCard
 import org.oxyroid.hscard.presenter.internal.collectAsPlatformState
+import org.oxyroid.hscard.presenter.internal.produce
 
 @Composable
 fun HomeRoute(
@@ -44,9 +49,33 @@ private fun HomeScreen(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Text(
-            text = "home",
-            modifier = Modifier.padding(16.dp)
+            text = "home 我的家 JenLe",
+            modifier = Modifier.padding(16.dp),
+            fontFamily = FontFamily(Font(Res.font.JenLe))
         )
+        Text(
+            text = "home 我的家 Benguiat",
+            modifier = Modifier.padding(16.dp),
+            fontFamily = FontFamily(Font(Res.font.Benguiat))
+        )
+        Text(
+            text = "home 我的家 YDISapphIIM",
+            modifier = Modifier.padding(16.dp),
+            fontFamily = FontFamily(Font(Res.font.YDISapphIIM))
+        )
+        Text(
+            text = "home 我的家 FranklinGothicURWCon_Med",
+            modifier = Modifier.padding(16.dp),
+            fontFamily = FontFamily(Font(Res.font.FranklinGothicURWCon_Med))
+        )
+
+        val background by produce { Res.readBytes("files/interface/backgrounds/2.jpg") }
+        Box(modifier) {
+            AsyncImage(
+                model = background,
+                contentDescription = null
+            )
+        }
         Box(
             modifier = Modifier
                 .fillMaxWidth()

@@ -35,26 +35,16 @@ kotlin {
 //        }
 //    }
 
-    // https://github.com/JetBrains/compose-multiplatform/issues/3123
-    val osName = System.getProperty("os.name")
-    val targetOs = when {
-        osName == "Mac OS X" -> "macos"
-        osName.startsWith("Win") -> "windows"
-        osName.startsWith("Linux") -> "linux"
-        else -> error("Unsupported OS: $osName")
-    }
-
-    val targetArch = when (val osArch = System.getProperty("os.arch")) {
-        "x86_64", "amd64" -> "x64"
-        "aarch64" -> "arm64"
-        else -> error("Unsupported arch: $osArch")
-    }
-    val skikoTarget = "$targetOs-$targetArch"
-
     sourceSets {
+        all {
+            languageSettings {
+                optIn("org.jetbrains.compose.resources.ExperimentalResourceApi")
+            }
+        }
         val desktopMain by getting
 
         androidMain.dependencies {
+            // compose
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
 
@@ -98,18 +88,15 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel.compose)
         }
 
-        desktopMain.kotlin {
-            srcDir("build/generated/ksp/metadata")
-        }
         desktopMain.dependencies {
             // compose
             implementation(compose.desktop.currentOs)
 
             // coroutines
             implementation(libs.kotlinx.coroutines.swing)
-
-            // skiko
-            runtimeOnly("org.jetbrains.skiko:skiko-awt-runtime-$skikoTarget:0.8.9")
+        }
+        desktopMain.kotlin {
+            srcDir("build/generated/ksp/metadata")
         }
     }
     compilerOptions {
