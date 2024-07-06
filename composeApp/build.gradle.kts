@@ -17,12 +17,12 @@ kotlin {
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_17)
+            jvmTarget.set(JvmTarget.JVM_11)
         }
     }
 
     jvm("desktop")
-    jvmToolchain(17)
+    jvmToolchain(11)
 
 //    listOf(
 //        iosX64(),
@@ -48,8 +48,6 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
 
-            // coroutines
-            implementation(libs.kotlinx.coroutines.android)
         }
         commonMain.dependencies {
             // compose
@@ -63,7 +61,7 @@ kotlin {
 
             // room
             implementation(libs.androidx.room.runtime)
-            implementation(libs.androidx.room.ktx)
+//            implementation(libs.androidx.room.ktx)
 
             // sqlite
             implementation(libs.androidx.sqlite)
@@ -94,9 +92,6 @@ kotlin {
 
             // coroutines
             implementation(libs.kotlinx.coroutines.swing)
-        }
-        desktopMain.kotlin {
-            srcDir("build/generated/ksp/metadata")
         }
     }
     compilerOptions {
@@ -132,8 +127,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     buildFeatures {
         compose = true
@@ -161,6 +156,8 @@ dependencies {
 //    add("kspIosSimulatorArm64", libs.androidx.room.compiler)
 //    add("kspIosX64", libs.androidx.room.compiler)
 //    add("kspIosArm64", libs.androidx.room.compiler)
+
+    add("testImplementation", libs.kotlinx.coroutines.test)
 }
 
 // room schema directory
